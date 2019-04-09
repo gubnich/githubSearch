@@ -1,3 +1,14 @@
-<p>
-    login-input works!
-</p>
+<input
+    #input
+    type="text"
+    (keyup.enter)="onEnter(input.value)"
+    (keyup.arrowup)="children()"
+/>
+<ul #list>
+    <li
+        [attr.data-order]="i"
+        *ngFor="let login of (logins$ | async); index as i"
+    >
+        {{ login }}
+    </li>
+</ul>
