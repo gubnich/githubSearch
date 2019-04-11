@@ -1,14 +1,16 @@
 <input
     #input
     type="text"
-    (keyup.enter)="onEnter(input.value)"
-    (keyup.arrowup)="children()"
+    (keyup.arrowdown)="down()"
+    (keyup.arrowup)="up()"
+    [className]="'autocomlete-input'"
 />
-<ul #list>
+<ul #list [className]="'autocomlete-options'">
     <li
-        [attr.data-order]="i"
-        *ngFor="let login of (logins$ | async); index as i"
+        [className]="'autocomlete-item'"
+        *ngFor="let githuber of (githubers$ | async); trackBy: trackById"
     >
-        {{ login }}
+        <span>{{ githuber.login }}</span>
+        <span>{{ githuber.repos }}</span>
     </li>
 </ul>
