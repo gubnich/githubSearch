@@ -53,7 +53,7 @@ export class LoginInputComponent implements OnInit {
         this.loginInputService = loginInputService;
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.input$ = fromEvent(this.input.nativeElement, "input");
         this.githubers$ = this.input$.pipe(
             debounceTime(timeBetweenKeyups),
