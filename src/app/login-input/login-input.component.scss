@@ -1,0 +1,10 @@
+.autocomlete-input {
+    width: 15rem;
+}
+.autocomlete-options {
+    padding: 0;
+    .autocomlete-item {
+        display: flex;
+        justify-content: space-between;
+    }
+}

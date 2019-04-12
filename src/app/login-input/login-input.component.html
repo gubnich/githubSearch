@@ -1,0 +1,16 @@
+<input
+    #input
+    type="text"
+    (keyup.arrowdown)="down()"
+    (keyup.arrowup)="up()"
+    [className]="'autocomlete-input'"
+/>
+<ul #list [className]="'autocomlete-options'">
+    <li
+        [className]="'autocomlete-item'"
+        *ngFor="let githuber of (githubers$ | async); trackBy: trackByLogin"
+    >
+        <span>{{ githuber.login }}</span>
+        <span>{{ githuber.publicReposQuantity }}</span>
+    </li>
+</ul>
