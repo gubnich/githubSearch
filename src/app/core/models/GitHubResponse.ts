@@ -1,8 +1,17 @@
+interface Login {
+    login: string;
+}
+
 export interface GithubUsers {
-    items: Array<any>;
+    items: Array<Login>;
+}
+
+export interface GithubResponse {
+    login: string;
+    public_repos: number;
 }
 
 export interface GithubLoginAndRepos {
     login: string;
-    public_repos: number;
+    publicReposQuantity: number;
 }

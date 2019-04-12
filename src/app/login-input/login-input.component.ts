@@ -10,6 +10,7 @@ import { fromEvent, Observable } from "rxjs";
 import { switchMap, debounceTime } from "rxjs/operators";
 
 import { LoginInputService, GithubLoginAndRepos } from "../core/index";
+import { timeBetweenKeyups } from "./login-input.constants";
 
 @Component({
     selector: "app-login-input",
@@ -55,7 +56,7 @@ export class LoginInputComponent implements OnInit {
     ngOnInit() {
         this.input$ = fromEvent(this.input.nativeElement, "input");
         this.githubers$ = this.input$.pipe(
-            debounceTime(500),
+            debounceTime(timeBetweenKeyups),
             switchMap(() =>
                 this.loginInputService.getGithubers(
                     this.input.nativeElement.value
@@ -67,22 +68,29 @@ export class LoginInputComponent implements OnInit {
     /**
      *  This method is to help Angular to track which items added
      */
-    public trackById(index, item) {
-        return item.id;
+    public trackByLogin(index, item) {
+        return item.login;
     }
 
     /**
      *  To change current li-element via keyboard (handles arrow-down event)
      */
-    down(): void {
+    public down(): void {
+        //  IF it`s not the first keyup event and we already have the picked by user li-element
+        //  we change style of this active element and assign the next element as active (it may be
+        //  either the next sibling or the first li-element by circle).
         if (this.active) {
             this.active.style.background = "transparent";
             this.active =
                 this.active.nextSibling ||
                 this.list.nativeElement.firstElementChild;
+            //  ELSE if it`s the first keyup event we don`t have an active element yet and
+            //  we must assign to it the first li-element
         } else {
             this.active = this.list.nativeElement.firstElementChild;
         }
+        //  Also if the list of autocomplete options is not empty we change the style of active
+        //  li-element in response to every key event and pass the value of this element into the html-input
         if (this.list.nativeElement.children.length) {
             this.active.style.background = "pink";
             this.input.nativeElement.value = this.active.firstElementChild.textContent;
@@ -92,7 +100,10 @@ export class LoginInputComponent implements OnInit {
     /**
      *  To change current li-element via keyboard (handles arrow-up event)
      */
-    up(): void {
+    public up(): void {
+        //  IF it`s not the first keyup event and we already have the picked by user li-element
+        //  we change style of this active element and assign the next element as active (it may be
+        //  either the previous sibling or the last li-element by circle).
         if (this.active) {
             this.active.style.background = "transparent";
             this.active =
@@ -100,9 +111,13 @@ export class LoginInputComponent implements OnInit {
                 this.active.previousSibling.nodeName === "LI"
                     ? this.active.previousSibling
                     : this.list.nativeElement.lastElementChild;
+            //  ELSE if it`s the first keyup event we don`t have an active element yet and
+            //  we must assign to it the last li-element
         } else {
             this.active = this.list.nativeElement.lastElementChild;
         }
+        //  Also if the list of autocomplete options is not empty we change the style of new active
+        //  li-element in response to every key event and pass the value of this element into the html-input
         if (this.list.nativeElement.children.length) {
             this.active.style.background = "pink";
             this.input.nativeElement.value = this.active.firstElementChild.textContent;

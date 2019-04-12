@@ -1,1 +1,5 @@
-export { GithubUsers, GithubLoginAndRepos } from "./GitHubResponse";
+export {
+    GithubUsers,
+    GithubLoginAndRepos,
+    GithubResponse
+} from "./gitHubResponse";

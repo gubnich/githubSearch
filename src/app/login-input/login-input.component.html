@@ -8,9 +8,9 @@
 <ul #list [className]="'autocomlete-options'">
     <li
         [className]="'autocomlete-item'"
-        *ngFor="let githuber of (githubers$ | async); trackBy: trackById"
+        *ngFor="let githuber of (githubers$ | async); trackBy: trackByLogin"
     >
         <span>{{ githuber.login }}</span>
-        <span>{{ githuber.repos }}</span>
+        <span>{{ githuber.publicReposQuantity }}</span>
     </li>
 </ul>
