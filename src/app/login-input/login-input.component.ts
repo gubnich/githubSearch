@@ -7,9 +7,14 @@ import {
 } from "@angular/core";
 
 import { fromEvent, Observable } from "rxjs";
-import { switchMap, debounceTime } from "rxjs/operators";
+import {
+    switchMap,
+    debounceTime,
+    publishReplay,
+    refCount
+} from "rxjs/operators";
 
-import { LoginInputService, GithubLoginAndRepos } from "../core/index";
+import { LoginInputService } from "../core/index";
 import { timeBetweenKeyups } from "./login-input.constants";
 
 @Component({
@@ -32,7 +37,7 @@ export class LoginInputComponent implements OnInit {
     /**
      *  Stores the list of github users with corresponding amount of repos
      */
-    public githubers$: Observable<Array<GithubLoginAndRepos>>;
+    public githubers$: Observable<any>;
 
     /**
      *  Currently picked li-element
@@ -61,7 +66,9 @@ export class LoginInputComponent implements OnInit {
                 this.loginInputService.getGithubers(
                     this.input.nativeElement.value
                 )
-            )
+            ),
+            publishReplay(1),
+            refCount()
         );
     }
 

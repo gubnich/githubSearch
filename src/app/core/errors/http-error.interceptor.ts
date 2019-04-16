@@ -1,35 +1,40 @@
+import { Injectable } from "@angular/core";
 import {
     HttpEvent,
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
-    // HttpResponse,
     HttpErrorResponse
 } from "@angular/common/http";
+
 import { Observable, throwError } from "rxjs";
 import { retry, catchError } from "rxjs/operators";
-import { Injectable } from "@angular/core";
+
+/**
+ *  This substr differentiate one query-string from another
+ */
+const differentiationString = "/search/";
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
     intercept(
-        request: HttpRequest<any>,
+        request: HttpRequest<string>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             retry(1),
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = "";
-                if (error.error instanceof ErrorEvent) {
-                    // client-side error
-                    errorMessage = `Error: ${error.error.message}`;
+                if (request.url.includes(differentiationString)) {
+                    errorMessage = `Can't get users by login: ${
+                        error.error.message
+                    }`;
                 } else {
-                    // server-side error
-                    errorMessage = `Error Code: ${error.status}\nMessage: ${
-                        error.message
+                    errorMessage = `Can't get particular user: ${
+                        error.error.message
                     }`;
                 }
-                window.alert(errorMessage);
-                return throwError(errorMessage);
+                return throwError({ items: [], error: true, errorMessage });
             })
         );
     }
