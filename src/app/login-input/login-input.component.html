@@ -5,12 +5,18 @@
     (keyup.arrowup)="up()"
     [className]="'autocomlete-input'"
 />
-<ul #list [className]="'autocomlete-options'">
+<ul #list class="autocomlete-options" *ngIf="!(githubers$ | async)?.error">
     <li
-        [className]="'autocomlete-item'"
-        *ngFor="let githuber of (githubers$ | async); trackBy: trackByLogin"
+        class="autocomlete-item"
+        *ngFor="
+            let githuber of (githubers$ | async)?.items;
+            trackBy: trackByLogin
+        "
     >
         <span>{{ githuber.login }}</span>
         <span>{{ githuber.publicReposQuantity }}</span>
     </li>
 </ul>
+<div *ngIf="(githubers$ | async)?.error">
+    {{ (githubers$ | async)?.errorMessage }}
+</div>

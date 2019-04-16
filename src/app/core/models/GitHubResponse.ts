@@ -2,16 +2,21 @@ interface Login {
     login: string;
 }
 
-export interface GithubUsers {
+interface Error {
+    error?: boolean;
+    errorMessage?: string;
+}
+
+export interface GithubUsers extends Error {
     items: Array<Login>;
 }
 
-export interface GithubResponse {
+export interface GithubResponse extends Error {
     login: string;
     public_repos: number;
 }
 
-export interface GithubLoginAndRepos {
+export interface GithubLoginAndRepos extends Error {
     login: string;
     publicReposQuantity: number;
 }

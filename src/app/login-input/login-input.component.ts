@@ -7,7 +7,12 @@ import {
 } from "@angular/core";
 
 import { fromEvent, Observable } from "rxjs";
-import { switchMap, debounceTime } from "rxjs/operators";
+import {
+    switchMap,
+    debounceTime,
+    publishReplay,
+    refCount
+} from "rxjs/operators";
 
 import { LoginInputService, GithubLoginAndRepos } from "../core/index";
 import { timeBetweenKeyups } from "./login-input.constants";
@@ -61,7 +66,9 @@ export class LoginInputComponent implements OnInit {
                 this.loginInputService.getGithubers(
                     this.input.nativeElement.value
                 )
-            )
+            ),
+            publishReplay(1),
+            refCount()
         );
     }
 
