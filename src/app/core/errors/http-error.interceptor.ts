@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     intercept(
         request: HttpRequest<string>,
         next: HttpHandler
-    ): Observable<HttpEvent<any>> {
+    ): Observable<HttpEvent<HttpErrorResponse>> {
         return next.handle(request).pipe(
             retry(1),
             catchError((error: HttpErrorResponse) => {
@@ -34,7 +34,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         error.error.message
                     }`;
                 }
-                return throwError({ items: [], error: true, errorMessage });
+                return throwError({ error: true, errorMessage });
             })
         );
     }

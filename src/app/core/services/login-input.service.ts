@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { from, Observable, of } from "rxjs";
+import { from, Observable, of, throwError } from "rxjs";
 import { map, mergeMap, switchMap, scan, catchError } from "rxjs/operators";
 
 import {
@@ -41,7 +41,8 @@ export class LoginInputService {
                         ),
                         map(githubers => {
                             return { items: githubers };
-                        })
+                        }),
+                        catchError(err => of({ items: [], ...err }))
                     );
                 }
             }),
@@ -62,7 +63,8 @@ export class LoginInputService {
                     login,
                     publicReposQuantity
                 })
-            )
+            ),
+            catchError(err => throwError(err))
         );
     }
 }
