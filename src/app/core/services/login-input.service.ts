@@ -2,7 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { from, Observable, of, throwError } from "rxjs";
-import { map, mergeMap, switchMap, scan, catchError } from "rxjs/operators";
+import {
+    map,
+    mergeMap,
+    switchMap,
+    scan,
+    catchError,
+    tap
+} from "rxjs/operators";
 
 import {
     GithubLoginAndRepos,
