@@ -39,7 +39,7 @@ describe("LoginInputService", () => {
         service = TestBed.get(LoginInputService);
     });
 
-    it("should return array of logins (array of objects with logins)", () => {
+    fit("should return array of objects each of which has correct properties (login and publicReposQuantity)", () => {
         mockHttp.get.and.callFake(url => {
             if (url === getUsersUrl) {
                 return of(mockOuterResponse);
@@ -49,6 +49,7 @@ describe("LoginInputService", () => {
         });
         service.getGithubers("fakeLogin").subscribe(githubers => {
             githubers.items.forEach((item, i) => {
+                expect(item.login).toBe(mockOuterResponse.items[i].login);
                 expect(item.publicReposQuantity).toBe(i);
             });
         });
