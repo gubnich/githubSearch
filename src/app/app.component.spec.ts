@@ -1,31 +1,43 @@
 import { TestBed, async } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
+import { LoginInputComponent } from "./login-input/login-input.component";
+import { LoginInputService } from "./core";
+import { HttpClient, HttpHandler } from "@angular/common/http";
 
-// describe("AppComponent", () => {
-//     beforeEach(async(() => {
-//         TestBed.configureTestingModule({
-//             declarations: [AppComponent]
-//         }).compileComponents();
-//     }));
+class MockService {}
+class MockHttp {}
+class MockHandler {}
 
-//     it("should create the app", () => {
-//         const fixture = TestBed.createComponent(AppComponent);
-//         const app = fixture.debugElement.componentInstance;
-//         expect(app).toBeTruthy();
-//     });
+describe("AppComponent", () => {
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [AppComponent, LoginInputComponent],
+            providers: [
+                {
+                    provide: LoginInputService,
+                    useValue: MockService
+                },
+                {
+                    provide: HttpClient,
+                    useValue: MockHttp
+                },
+                {
+                    provide: HttpHandler,
+                    useValue: MockHandler
+                }
+            ]
+        }).compileComponents();
+    }));
 
-//     it(`should have as title 'githubSearch'`, () => {
-//         const fixture = TestBed.createComponent(AppComponent);
-//         const app = fixture.debugElement.componentInstance;
-//         expect(app.title).toEqual("githubSearch");
-//     });
+    it("should create the app", () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    });
 
-//     it("should render title in a h1 tag", () => {
-//         const fixture = TestBed.createComponent(AppComponent);
-//         fixture.detectChanges();
-//         const compiled = fixture.debugElement.nativeElement;
-//         expect(compiled.querySelector("h1").textContent).toContain(
-//             "Welcome to githubSearch!"
-//         );
-//     });
-// });
+    it(`should have as title 'githubSearch'`, () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app.title).toEqual("githubSearch");
+    });
+});

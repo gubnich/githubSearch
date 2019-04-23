@@ -6,6 +6,7 @@ import { generateQueryAllUsers, generateQueryUser } from "../utils/index";
 describe(`HttpErrorInterceptor`, () => {
     let errorInterceptor;
     let serviceSpy;
+
     beforeEach(() => {
         serviceSpy = jasmine.createSpyObj("LoginInputService", ["http"]);
         errorInterceptor = new HttpErrorInterceptor();

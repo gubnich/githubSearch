@@ -8,6 +8,7 @@ import { HttpErrorInterceptor } from "./../errors/index";
 
 describe("LoginInputService", () => {
     let service: LoginInputService;
+
     const mockHttp: any = jasmine.createSpyObj("HttpClient", ["get"]);
     const mockOuterResponse = {
         items: [
