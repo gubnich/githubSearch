@@ -11,6 +11,10 @@ export interface GithubUsers extends Error {
     items: Array<Login>;
 }
 
+export interface Githubers extends Error {
+    items: Array<GithubLoginAndRepos>;
+}
+
 export interface GithubResponse extends Error {
     login: string;
     public_repos: number;

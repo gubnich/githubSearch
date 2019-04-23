@@ -8,10 +8,10 @@ import {
 } from "@angular/common/http";
 
 import { Observable, throwError } from "rxjs";
-import { retry, catchError } from "rxjs/operators";
+import { retry, catchError, tap } from "rxjs/operators";
 
 /**
- *  This substr differentiate one query-string from another
+ *  This substr differentiates one query-string from another
  */
 const differentiationString = "/search/";
 

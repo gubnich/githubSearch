@@ -2,12 +2,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { from, Observable, of, throwError } from "rxjs";
-import { map, mergeMap, switchMap, scan, catchError } from "rxjs/operators";
+import {
+    map,
+    mergeMap,
+    switchMap,
+    scan,
+    catchError,
+    tap
+} from "rxjs/operators";
 
 import {
     GithubLoginAndRepos,
     GithubResponse,
-    GithubUsers
+    GithubUsers,
+    Githubers
 } from "../models/index";
 import { generateQueryAllUsers, generateQueryUser } from "../utils/index";
 
@@ -22,7 +30,7 @@ export class LoginInputService {
     /**
      *  Get array of user info from GitHub API via Http-client
      */
-    public getGithubers(query: string): Observable<Array<GithubLoginAndRepos>> {
+    public getGithubers(query: string): Observable<Githubers> {
         return this.http.get(generateQueryAllUsers(query)).pipe(
             switchMap((res: GithubUsers) => {
                 if (res.error) {
@@ -40,7 +48,7 @@ export class LoginInputService {
                             []
                         ),
                         map(githubers => {
-                            return { items: githubers };
+                            return { items: githubers } as Githubers;
                         }),
                         catchError(err => of({ items: [], ...err }))
                     );

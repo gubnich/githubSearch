@@ -1,5 +1,6 @@
 export {
     GithubUsers,
     GithubLoginAndRepos,
-    GithubResponse
+    GithubResponse,
+    Githubers
 } from "./gitHubResponse";

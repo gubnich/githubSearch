@@ -14,7 +14,7 @@ import {
     refCount
 } from "rxjs/operators";
 
-import { LoginInputService, GithubLoginAndRepos } from "../core/index";
+import { LoginInputService, Githubers } from "../core/index";
 import { timeBetweenKeyups } from "./login-input.constants";
 
 @Component({
@@ -37,7 +37,7 @@ export class LoginInputComponent implements OnInit {
     /**
      *  Stores the list of github users with corresponding amount of repos
      */
-    public githubers$: Observable<Array<GithubLoginAndRepos>>;
+    public githubers$: Observable<Githubers>;
 
     /**
      *  Currently picked li-element
