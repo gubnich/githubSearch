@@ -4,9 +4,9 @@ import { LoginInputComponent } from "./login-input/login-input.component";
 import { LoginInputService } from "./core";
 import { HttpClient, HttpHandler } from "@angular/common/http";
 
-class MockService {}
-class MockHttp {}
-class MockHandler {}
+const MockService = jasmine.createSpyObj("LoginInputService", ["service"]);
+const MockHttp = jasmine.createSpyObj("HttpClient", ["http"]);
+const MockHandler = jasmine.createSpyObj("HttpHandler", ["handler"]);
 
 describe("AppComponent", () => {
     beforeEach(async(() => {

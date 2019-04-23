@@ -8,9 +8,9 @@ describe("LoginInputComponent", () => {
     let component: LoginInputComponent;
     let fixture: ComponentFixture<LoginInputComponent>;
 
-    class MockService {}
-    class MockHttp {}
-    class MockHandler {}
+    const MockService = jasmine.createSpyObj("LoginInputService", ["service"]);
+    const MockHttp = jasmine.createSpyObj("HttpClient", ["http"]);
+    const MockHandler = jasmine.createSpyObj("HttpHandler", ["handler"]);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
