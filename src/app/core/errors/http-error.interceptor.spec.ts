@@ -11,7 +11,7 @@ describe(`HttpErrorInterceptor`, () => {
         errorInterceptor = new HttpErrorInterceptor();
     });
 
-    it("should ", () => {
+    it("should define error message for error occured during getGithubers request", () => {
         const url = generateQueryAllUsers("test");
         const httpHandlerSpy = jasmine.createSpyObj("HttpHandler", ["handle"]);
 
@@ -28,7 +28,7 @@ describe(`HttpErrorInterceptor`, () => {
             });
     });
 
-    it("should ", () => {
+    it("should define error message for error occured during getRepos request ", () => {
         const url = generateQueryUser("test");
         const httpHandlerSpy = jasmine.createSpyObj("HttpHandler", ["handle"]);
 

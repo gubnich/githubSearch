@@ -4,7 +4,7 @@ import { of, throwError } from "rxjs";
 
 import { LoginInputService } from "./login-input.service";
 import { generateQueryAllUsers, generateQueryUser } from "../utils/index";
-import { HttpErrorInterceptor } from "./../errors/http-error.interceptor";
+import { HttpErrorInterceptor } from "./../errors/index";
 
 describe("LoginInputService", () => {
     let service: LoginInputService;
@@ -57,36 +57,57 @@ describe("LoginInputService", () => {
         });
     });
 
-    it("should ...", () => {
+    it("should return an object with specified error-message in response of the inner (getRepos) method error", () => {
         mockHttp.get.and.callFake(url => {
             if (url.includes("/search/")) {
-                console.log("gggggggggggggg");
                 return of(mockOuterResponse);
             } else {
-                console.log("kkk");
-                return throwError({ errorMessage: "PPPPPP" });
+                return throwError({
+                    errorMessage:
+                        "Error response caused by request without /search/ in the query"
+                });
             }
         });
         service.getGithubers("error").subscribe(res => {
-            console.log(res);
             expect(res).toEqual({
                 items: [],
-                errorMessage: "PPPPPP"
+                errorMessage:
+                    "Error response caused by request without /search/ in the query"
             });
         });
     });
 
-    it("should ...", () => {
+    it("should return an object with specified error-message if response contain an error property", () => {
         mockHttp.get.and.callFake(url => {
-            return of({ items: [], error: true, errorMessage: "PPPPPP" });
+            return of({
+                items: [],
+                error: true,
+                errorMessage: "Error message text"
+            });
         });
 
         service.getGithubers("error").subscribe(res => {
-            console.log("res", res);
             expect(res).toEqual({
                 items: [],
                 error: true,
-                errorMessage: "PPPPPP"
+                errorMessage: "Error message text"
+            });
+        });
+    });
+
+    it("should return an object with specified error-message in response of the outer (getGithubers) method error", () => {
+        mockHttp.get.and.callFake(url => {
+            return throwError({
+                errorMessage:
+                    "Error response caused by request with /search/ in the query"
+            });
+        });
+
+        service.getGithubers("error").subscribe(res => {
+            expect(res).toEqual({
+                items: [],
+                errorMessage:
+                    "Error response caused by request with /search/ in the query"
             });
         });
     });
